@@ -227,7 +227,7 @@ export const SearchBar = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [filteredCollection, typing]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -314,7 +314,7 @@ export const SearchBar = () => {
                         className='absolute right-4 flex justify-center items-center h-auto bg-white px-3 py-2 rounded-xl gap-2 shadow-sm'
                     >
                         <span className='text-md text-gray-500 font-semibold'>
-                        '/' for commands
+                        {`'/' for commands`}
                         </span>
                     </motion.div>
                     

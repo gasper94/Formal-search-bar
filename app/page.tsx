@@ -14,7 +14,7 @@ export default function IndexPage() {
     <div className='h-screen w-full'>
         <SiteHeader />
 
-        <div className="flex flex-col items-center justify-center flex-1 w-full h-full bg-gradient-to-t from-blue-200 gap-16">
+        <div className="flex flex-col items-center justify-center w-full h-full bg-gradient-to-t from-blue-200 gap-16">
           <StatsSection >
               <CommonCard
                 title="Logs"

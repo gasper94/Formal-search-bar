@@ -4,7 +4,7 @@ import { ItemList } from '../ItemList/ItemList';
 // Types
 import { MainSectionProps } from '@/types/searchbar';
 
-export const MainSection = ({typing, optionFilter, itemsW, items, selectedItemIndex}: MainSectionProps): ReactNode => (
+export const MainSection = ({typing, optionFilter, itemsW, items, selectedItemIndex}: MainSectionProps) => (
     <div className='flex-1 ' style={{ overflowY: 'auto' }}>
         <div>
         {typing ?
