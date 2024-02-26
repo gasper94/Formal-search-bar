@@ -1,0 +1,9 @@
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.Button:hover {
+  background-color: 'red'; /* Change to the color you desire on hover */
+  color: gray; /* Change text color on hover */
+}
