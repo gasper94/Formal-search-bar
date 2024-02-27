@@ -23,12 +23,13 @@ const BackgroundVariant = {
   }
 }
 
-export const Blur = ({ open }: BlurProps) => (
+export const Blur = ({ open, handleBlurClose }: BlurProps) => (
     <motion.div
       initial={"initial"}
       animate={open ? 'open': 'closed'}
       variants={BackgroundVariant}
       style={{position: 'absolute', zIndex: '40'}}
+      onClick={handleBlurClose}
     >
     </motion.div>
 )

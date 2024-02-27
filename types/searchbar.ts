@@ -1,5 +1,6 @@
 export interface BlurProps {
   open: boolean
+  handleBlurClose: () => void
 }
 
 export interface Product {
@@ -44,6 +45,7 @@ export interface MainSectionProps {
   itemsW: any
   items: any
   selectedItemIndex: any
+  inputValue: any
 }
 
 export type OptionsProps = {

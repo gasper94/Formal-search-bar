@@ -121,13 +121,13 @@ const Options = ({ optionFilter, setOptionFilter }: OptionsPropsx) => {
   };
 
   return(
-    <div className="flex justify-between items-center px-3 bg-transparent h-12 ">
+    <div className="flex justify-between items-center px-3 bg-transparent h-12 overflow-x-hidden">
       <div className='flex flex-row gap-2'>
         <CustomButton label='All' selected={optionFilter === "ALL"} handleButtonClick={handleAllButtonClick}>
           <></>
         </CustomButton>
         <CustomButton label='Data' selected={optionFilter === "DATA"} handleButtonClick={handleDataButtonClick}>
-          <Icons.data className="h-7 w-7" color={optionFilter === "DATA" ? 'white' : 'black'} />
+          <Icons.data className="h-7 w-7" color={optionFilter === "DATA" ? 'white' :  'black'} />
         </CustomButton>
         <CustomButton label='Security' selected={optionFilter === "SECURITY"} handleButtonClick={handleSecurityButtonClick}>
           <Icons.lock className="h-7 w-7" />
@@ -136,7 +136,7 @@ const Options = ({ optionFilter, setOptionFilter }: OptionsPropsx) => {
           <Icons.puzzle className="h-7 w-7"/>
         </CustomButton>
         <CustomButton label='Tools' selected={optionFilter === "TOOLS"} handleButtonClick={handleToolsButtonClick}>
-          <Icons.tools className="h-7 w-7" color='blue'/>
+          <Icons.tools className="h-7 w-7" color={optionFilter === "TOOLS" ? 'white' : 'black'}/>
         </CustomButton>
         <CustomButton label='Settings' selected={optionFilter === "SETTINGS"} handleButtonClick={handleSettingsButtonClick}>
           <Icons.settings className="h-7 w-7 bg-black" />
@@ -156,12 +156,16 @@ const Options = ({ optionFilter, setOptionFilter }: OptionsPropsx) => {
 
 function CustomButton({ children, label, selected, handleButtonClick }: CustomButtonProps) {
   return (
-    <Button
+    <motion.button
       className={`flex flex-row items-center gap-2 py-2 px-4 rounded-2xl text-sm border-[1px] shadow-sm ${selected ? 'bg-black text-white' : 'bg-white text-black'} border-gray-200`}
       onClick={handleButtonClick}
+      whileHover={{ scale: 1.1 }} // Can change if the motion animation is too much!
+      whileTap={{ scale: 0.95 }} // Can change if the motion animation is too much!
+      transition={{ duration: 0.2 }}
+      animate={selected ? { scale: 1.1 }: {}} // This triggers the animation on selected. 
     >
       {children}
       <span className='text-md font-semibold pr-1'>{label}</span>
-    </Button>
+    </motion.button>
   );
 }

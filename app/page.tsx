@@ -1,6 +1,11 @@
-import React from 'react';
+'use client'
+
+import Image from 'next/image';
+import React, {useEffect, useState} from 'react';
 import { Icons } from "@/components/icons"
 import { SiteHeader } from "@/components/site-header"
+
+import image from '../public/screen.png'
 
 // Components
 import { StatsSection } from "../components/StatsSection/StatsSection";
@@ -10,7 +15,34 @@ import { BarChart } from '@/components/graphs/barChart';
 import { HeatmapChart } from '@/components/graphs/heatMap';
 
 export default function IndexPage() {
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize(); // Initial check
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
+    <>
+    {isMobile ? (
+      <div className='flex flex-col justify-center items-center h-screen w-full bg-gradient-to-t from-blue-200'>
+        <svg width="250" height="250" viewBox="0 0 2048 1792" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1408 1472V1152H1536V1472H1408ZM1408 1664V1536H1536V1664H1408ZM0 0H2048V1434L1920 1178V128H128V805L576 358L1148 930L1088 1050L576 538L128 987V1408H909L845 1536H0V0ZM1600 384C1582.67 384 1567.67 377.667 1555 365C1542.33 352.333 1536 337.333 1536 320C1536 302.667 1542.33 287.667 1555 275C1567.67 262.333 1582.67 256 1600 256C1617.33 256 1632.33 262.333 1645 275C1657.67 287.667 1664 302.667 1664 320C1664 337.333 1657.67 352.333 1645 365C1632.33 377.667 1617.33 384 1600 384ZM896 1792L1472 640L2048 1792H896ZM1077 1680H1867L1472 890L1077 1680Z" fill="black"/>
+        </svg>
+
+        <div className='px-10 md:px-20 text-center'>
+          <p className="text-lg md:text-xl font-semibold">Your display is too small for this application.</p>
+          <p className="text-lg md:text-xl text-gray-600">Please consider using a device with a larger display.</p>
+        </div>
+      </div>
+    ): (
     <div className='h-screen w-full'>
         <SiteHeader />
 
@@ -83,5 +115,8 @@ export default function IndexPage() {
           
         </div>
       </div> 
+    )
+    }
+    </>
   )
 }

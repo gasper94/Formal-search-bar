@@ -21,3 +21,12 @@ npx create-next-app -e https://github.com/shadcn/next-template
 
 Licensed under the [MIT license](https://github.com/shadcn/ui/blob/main/LICENSE.md).
 # Formal-search-bar
+
+
+#2 Changes
+- All Clickable Navigation Bar.
+- Close Search Bar on cliked Blur Area (Setting all default states).
+- '/' on deleting(backspace), the view goes back to initial services (Initial service state).
+- Animation triggers on options services button. OnHover and of arrows(left+right) triggers.
+- Handled smaller screen: tablet should be the last default. 
+

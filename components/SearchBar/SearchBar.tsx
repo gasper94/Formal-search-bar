@@ -159,6 +159,30 @@ export const SearchBar = () => {
   }, []);
 
   useEffect(() => {
+
+    if(inputValue.length <= 0){
+      // setInputValue('')
+      setTrackerIndex(0);
+      setTyping(false);
+    }
+
+    function updateOptionPointer(prevIndex: any) {
+      if (prevIndex === optionList.size) {
+        // If current index is the last item, reset to 0
+        setOptionFilter(`${optionList.get("1")}`);
+        return 1;
+      } else {
+        // Increment the index
+        const nextIndex = prevIndex + 1;
+        if (optionList.has(nextIndex.toString())) {
+          setOptionFilter(`${optionList.get(nextIndex.toString())}`);
+          return nextIndex;
+        } else {
+          return prevIndex;
+        }
+      }
+    }
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowDown') {
         console.log('typing: ', typing)
@@ -195,31 +219,13 @@ export const SearchBar = () => {
           inputRef.current.focus();
           setTyping(true)
         }
-      }else if (e.key === 'ArrowRight') {
-          e.preventDefault();
-          setOptionPointer((prevIndex) => {
-            const nextIndex = prevIndex + 1;
-            if (optionList.has(nextIndex.toString())) {
-              setOptionFilter(`${optionList.get(nextIndex.toString())}`);
-              
-              return nextIndex;
-            } else {
-              return prevIndex;
-            }
-          });
-      }else if (e.key === 'ArrowLeft') {
-          e.preventDefault();
-          
-          setOptionPointer((prevIndex) => {
-            const nextIndex = prevIndex - 1;
-            if (optionList.has(nextIndex.toString())) {
-              setOptionFilter(`${optionList.get(nextIndex.toString())}`);
-              return nextIndex;
-            } else {
-              return prevIndex;
-            }
-          });
-      }
+      }else   if (e.key === 'Tab') {
+    e.preventDefault(); // Prevent default tab behavior
+
+    setOptionPointer((prevIndex) => {
+      return updateOptionPointer(prevIndex);
+    });
+    }
     };
 
     document.addEventListener('keydown', handleKeyDown);
@@ -227,15 +233,24 @@ export const SearchBar = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [filteredCollection, typing]);
+  }, [filteredCollection, typing, inputValue]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
+
+  const handleBlurClose = () => {
+    setOpen(false);
+    setTrackerIndex(0)
+    setInputValue('')
+    setTyping(false);
+  }
+
     return (
         <div>
-            <Blur open={open}/>
+            <Blur open={open} handleBlurClose={handleBlurClose}/>
+         
             <motion.div
             initial={"initial"}
             animate={open ? 'open': 'closed'}
@@ -261,7 +276,7 @@ export const SearchBar = () => {
                     "flex absolute w-full justify-between items-center text-sm text-muted-foreground px-12 top-0 left-0 right-0 z-30"
                     )}
                     style={{ height: "60px"}}
-                    // onClick={() => setOpen(true)}
+                    onClick={() => setOpen(true)}
                 >
                     <span className="text-lg">Search for anything...</span>
                     <a className='flex justify-center items-center h-full bg-white px-4 rounded-xl gap-2 shadow-sm z-50' onClick={() => setOpen(true)}>
@@ -322,7 +337,6 @@ export const SearchBar = () => {
                 </Button>
                 </motion.div>
             </motion.div>
-
             <motion.div 
                 initial={'initial'}
                 animate={open ? body.open : body.close}
@@ -342,6 +356,7 @@ export const SearchBar = () => {
                     optionFilter={optionFilter}
                     itemsW={itemsW}
                     items={items}
+                    inputValue={inputValue}
                     selectedItemIndex={selectedItemIndex}
                 />
 
